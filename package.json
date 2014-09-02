@@ -1,1 +1,32 @@
-
+{
+  "name": "underscore-collections",
+  "version": "0.0.1",
+  "description": "JS library intended to extend Underscore object operations (like isEqual) to collections of objects",
+  "main": "underscore-collections.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akkenoth/underscore-collections.git"
+  },
+  "keywords": [
+    "underscore",
+    "collection",
+    "collections",
+    "object",
+    "objects",
+    "extend",
+    "js",
+    "javascript"
+  ],
+  "author": "Akkenoth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akkenoth/underscore-collections/issues"
+  },
+  "homepage": "https://github.com/akkenoth/underscore-collections",
+  "dependencies": {
+    "underscore": "^1.7.0"
+  }
+}
