@@ -57,7 +57,7 @@
 	}
 
 	// Current version.
-	_.VERSION = '0.0.2';
+	_.VERSION = '0.1.0';
 
 	// Require underscore for obvious reasons
 	var Us = require('underscore');
