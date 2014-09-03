@@ -57,7 +57,7 @@
 	}
 
 	// Current version.
-	_.VERSION = '0.0.1';
+	_.VERSION = '0.0.2';
 
 	// Require underscore for obvious reasons
 	var Us = require('underscore');
@@ -87,7 +87,7 @@
 		return _.indexOfDeep(obj, target) >= 0;
 	}
 
-	_.intersectionDeep = _.intersectDeep = function(Array) {
+	_.intersectionDeep = _.intersectDeep = function(array) {
 		if (array == null)
 			return [];
 		var result = [];

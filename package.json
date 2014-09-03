@@ -1,6 +1,6 @@
 {
   "name": "underscore-collections",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JS library intended to extend Underscore object operations (like isEqual) to collections of objects",
   "main": "underscore-collections.js",
   "scripts": {
