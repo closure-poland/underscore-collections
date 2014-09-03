@@ -17,11 +17,12 @@
 	var previousUnderscore = root._;
 
 	// Save bytes in the minified (but not gzipped) version:
-	var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+	var ArrayProto = Array.prototype,
+		ObjProto = Object.prototype,
+		FuncProto = Function.prototype;
 
 	// Create quick reference variables for speed access to core prototypes.
-	var
-		push			= ArrayProto.push,
+	var	push			= ArrayProto.push,
 		slice			= ArrayProto.slice,
 		concat			= ArrayProto.concat,
 		toString		= ObjProto.toString,
@@ -36,8 +37,10 @@
 
 	// Create a safe reference to the Underscore-collections object for use below.
 	var _ = function(obj) {
-		if (obj instanceof _) return obj;
-		if (!(this instanceof _)) return new _(obj);
+		if (obj instanceof _)
+			return obj;
+		if (!(this instanceof _))
+			return new _(obj);
 		this._wrapped = obj;
 	};
 
@@ -58,5 +61,49 @@
 
 	// Require underscore for obvious reasons
 	var Us = require('underscore');
+
+	_.indexOfDeep = function(array, item, isSorted) {
+		if (array == null)
+			return -1;
+		var i = 0, length = array.length;
+		if (isSorted) {
+			if (typeof isSorted == 'number') {
+				i = isSorted < 0 ? Math.max(0, length + isSorted) : isSorted;
+			} else {
+				i = Us.sortedIndex(array, item);
+				return Us.isEqual(array[i], item) ? i : -1;
+			}
+		}
+		for (; i < length; i++)
+			if (Us.isEqual(array[i], item))
+				return i;
+	}
+
+	_.containsDeep = _.includeDeep = function(obj, target) {
+		if (obj == null)
+			return false;
+		if (obj.length !== +obj.length)
+			obj = Us.values(obj);
+		return _.indexOfDeep(obj, target) >= 0;
+	}
+
+	_.intersectionDeep = _.intersectDeep = function(Array) {
+		if (array == null)
+			return [];
+		var result = [];
+		var argsLength = arguments.length;
+		for (var i = 0, length = array.length; i < length; i++) {
+			var item = array[i];
+			if (_.containsDeep(result, item))
+				continue;
+			for (var j = 1; j < argsLength; j++) {
+				if (!_.containsDeep(arguments[j], item))
+					break;
+			}
+			if (j === argsLength)
+				result.push(item);
+		}
+		return result;
+	}
 
 }.call(this));
