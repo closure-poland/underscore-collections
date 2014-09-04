@@ -57,11 +57,16 @@
 	}
 
 	// Current version.
-	_.VERSION = '0.1.0';
+	_.VERSION = '0.1.1';
 
 	// Require underscore for obvious reasons
 	var Us = require('underscore');
 
+	// Return the position of the first occurrence of an item OR OBJECT in an array,
+	// or -1 if the item is not included in the array.
+	// If the array is large and already in sort order, pass `true`
+	// for **isSorted** to use binary search.
+	// Uses isEqual instead of '==='.
 	_.indexOfDeep = function(array, item, isSorted) {
 		if (array == null)
 			return -1;
@@ -79,6 +84,8 @@
 				return i;
 	}
 
+	// Determine if the array or object contains a given value (using `isEqual`).
+	// Aliased as `includeDeep`.
 	_.containsDeep = _.includeDeep = function(obj, target) {
 		if (obj == null)
 			return false;
@@ -87,6 +94,8 @@
 		return _.indexOfDeep(obj, target) >= 0;
 	}
 
+	// Produce an array that contains every item OR OBJECT shared between all the
+	// passed-in arrays.
 	_.intersectionDeep = _.intersectDeep = function(array) {
 		if (array == null)
 			return [];
@@ -104,6 +113,39 @@
 				result.push(item);
 		}
 		return result;
+	}
+
+	// Internal implementation of a recursive `flatten` function.
+	//From base UnderscoreJS.
+	var flatten = function(input, shallow, strict, output) {
+		if (shallow && Us.every(input, us.isArray)) {
+			return concat.apply(output, input);
+		}
+		for (var i = 0, length = input.length; i < length; i++) {
+			var value = input[i];
+			if (!Us.isArray(value) && !Us.isArguments(value)) {
+				if (!strict)
+					output.push(value);
+			} else if (shallow) {
+				push.apply(output, value);
+			} else {
+				flatten(value, shallow, strict, output);
+			}
+		}
+	return output;
+	};
+
+	// Take the difference between one array and a number of other arrays.
+	// Only the elements present in just the first array will remain.
+	// Uses 'isEqual' instead of '===' to work for nested objects/arrays.
+	_.differenceDeep = function(array) {
+		var rest = flatten(slice.call(arguments,1),
+							true,
+							true,
+							[]);
+		return Us.filter(array, function(value) {
+			return !_.containsDeep(rest, value);
+		});
 	}
 
 }.call(this));
