@@ -118,7 +118,7 @@
 	// Internal implementation of a recursive `flatten` function.
 	//From base UnderscoreJS.
 	var flatten = function(input, shallow, strict, output) {
-		if (shallow && Us.every(input, us.isArray)) {
+		if (shallow && Us.every(input, Us.isArray)) {
 			return concat.apply(output, input);
 		}
 		for (var i = 0, length = input.length; i < length; i++) {
